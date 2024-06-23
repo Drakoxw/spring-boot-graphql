@@ -1,0 +1,95 @@
+##############################################
+################# ESTUDIANTE #################
+##############################################
+
+### CREAR UN ESTUDIANTE 
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+
+mutation {
+	students: createStudent(
+		inputStudent: { name: "Juan", lastName: "Colinas", age: 17, courseId: "3" }
+	) {
+		id
+		name
+		lastName
+		age
+	}
+}
+
+
+### LISTAR LOS ESTUDIANTES
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+{
+	students: findAllStudents {
+		id,name,lastName,age
+	}
+}
+
+
+### BUSCAR UN ESTUDIANTE
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+{
+	 student : findStudenById(studentId: "1") {
+		id,name,lastName,age,
+		course {
+			name,
+			teacher
+		}
+	}
+}
+
+
+### ELIMINAR UN ESTUDIANTE
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+mutation {
+	deleted: deleteStudentById(studentId: "12")
+}
+
+##########################################
+################# CURSOS #################
+##########################################
+
+### CREAR UN CURSO
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+mutation {
+	course: createCourse(input: {
+		name: "Defensa magica",
+		category: "Magica",
+		teacher: "Harry Potter"
+	}) {
+		id,name,category,teacher
+	}
+}
+
+
+### LISTAR LOS CURSOS
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+{
+	courses: findAllCourses {
+		id,name,category,teacher
+	}
+}
+
+
+### BUSCAR UN CURSO
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+{
+	course: findCourseById(courseId: "3"){
+		id,name,category,teacher
+	}
+}
+
+
+### ELIMINAR UN CURSO
+POST http://localhost:8080/graphql HTTP/1.1
+Content-Type: application/json
+mutation {
+	course: deleteCourse(courseId: "6")
+}
